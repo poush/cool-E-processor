@@ -1,0 +1,134 @@
+#define ml1 11
+#define ml0 10
+#define mr1 9
+#define mr0 8
+#define sp 6
+#define sp1 7
+int a;
+int i=0,j,p=0;
+int n[8]={0,5,30,60,90,150,200,255};
+void setup()
+{
+  Serial.begin(9600);
+  for(int i=4;i<=12;i++)
+  pinMode(i,OUTPUT); // OutPut from 7 to 11
+
+}
+void forward()
+{
+  digitalWrite(ml1,1);
+  digitalWrite(ml0,0);
+  digitalWrite(mr1,1);
+  digitalWrite(mr0,0);
+  digitalWrite(4,0);
+  digitalWrite(5,0);
+}
+void backward()
+{
+  digitalWrite(ml1,0);
+  digitalWrite(ml0,1);
+  digitalWrite(mr1,0);
+  digitalWrite(mr0,1);
+}
+void STOP()
+{
+  digitalWrite(ml1,0);
+  digitalWrite(ml0,0);
+  digitalWrite(mr1,0);
+  digitalWrite(mr0,0);
+}
+void right()
+{
+  digitalWrite(ml1,0);
+  digitalWrite(ml0,0);
+  digitalWrite(mr1,1);
+  digitalWrite(mr0,0);
+}
+void left()
+{
+  digitalWrite(ml1,1);
+  digitalWrite(ml0,0);
+  digitalWrite(mr1,0);
+  digitalWrite(mr0,0);
+
+}
+void vleft()
+{
+  digitalWrite(ml1,1);
+  digitalWrite(ml0,0);
+  digitalWrite(mr1,0);
+  digitalWrite(mr0,1);
+
+}
+void vright()
+{
+  digitalWrite(ml1,0);
+  digitalWrite(ml0,1);
+  digitalWrite(mr1,1);
+  digitalWrite(mr0,0);
+}
+void Break()
+{
+  digitalWrite(ml1,1);
+  digitalWrite(ml0,1);
+  digitalWrite(mr1,1);
+  digitalWrite(mr0,1);
+  digitalWrite(4,0);
+  digitalWrite(5,1);
+}
+void loop()
+{
+ a = Serial.read();
+ if(a=='w')
+ {
+  forward();
+ }
+ else if (a=='d')
+ {
+  right();
+ }
+ else if (a=='a')
+ {
+  left();
+ }
+ else if (a=='s')
+ {
+  backward();
+ }
+ else if(a=='W')
+ {
+  STOP();
+ }
+ else if(a=='q')
+ {
+  vleft();
+ }
+ else if(a=='e')
+ {
+  vright();
+ }
+  else if(a=='f' )
+  {
+    digitalWrite(12,HIGH);
+    p=1;
+  }
+  else if(a=='g' )
+  {
+    digitalWrite(12,LOW);
+    p=0;
+  }
+  if(a=='b')
+  {
+    Break();
+  }
+   else if(a=='=')
+   { i++;
+     j=n[i];
+   }
+  else if(a=='-')
+   { i--;
+     j=n[i];
+   }
+  analogWrite(sp,j);
+  analogWrite(sp1,j);
+}
